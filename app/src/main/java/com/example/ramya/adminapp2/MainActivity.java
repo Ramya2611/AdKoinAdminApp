@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
 
     private StorageTask mUploadTask;
-
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                             mDatabaseRef.child(uploadId).setValue(upload);
                             String url = taskSnapshot.getDownloadUrl().toString();
                             Log.d(TAG, "onSuccess: success"+url);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -159,5 +160,25 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,ImagesActivity.class);
         startActivity(intent);
 
+    }
+    @Override
+    public void onBackPressed(){
+        mEditTextFileName.setText(null);
+        mImageView.setImageDrawable(null);
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
