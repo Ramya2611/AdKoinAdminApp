@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
                                     mProgressBar.setProgress(0);
                                 }
-                            },500);
+                            },100);
                             Toast.makeText(MainActivity.this,"Image Uploaded",Toast.LENGTH_SHORT).show();
                             Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
                                     taskSnapshot.getDownloadUrl().toString());
